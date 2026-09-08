@@ -1,0 +1,31 @@
+@startuml
+title Avito.Kitchen — C4 Level 2 and Level 3
+
+skinparam componentStyle rectangle
+
+actor "Web Client" as client
+
+package "Avito.Kitchen System" {
+
+    rectangle "Main API\nGo" as api {
+
+        rectangle "HTTP Handlers" as handlers
+        rectangle "Repositories" as repositories
+        rectangle "Database Connection" as connection
+        rectangle "Restaurant Service Client" as restaurantClient
+
+        handlers --> repositories
+        repositories --> connection
+        handlers --> restaurantClient
+    }
+
+    database "PostgreSQL" as db
+    rectangle "Restaurant Service\nGo" as restaurant
+}
+
+client --> handlers : HTTP / JSON
+
+connection --> db : SQL
+restaurantClient --> restaurant : HTTP / JSON
+
+@enduml
